@@ -1,4 +1,3 @@
-
 package entities;
 
 /**
@@ -6,16 +5,26 @@ package entities;
  * @author Patricia
  */
 public class DataModel {
+
     private String identificator;
     private double latitude;
     private double longitude;
     private String timeStampString;
 
-    public DataModel(String identificator, double latitude, double longitude, String timeStampString) {
-        this.identificator = identificator;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.timeStampString = timeStampString;
+    //  Data format : ID, DataStamp , Lat, Long
+    //  Example of data : 1,2008-02-04 00:05:13,116.69161,39.85172
+    public DataModel(String line) {
+        try {
+            String[] parts = line.split(",");
+
+            identificator = parts[0];
+            timeStampString = parts[1];
+            latitude = Double.parseDouble(parts[2]);
+            longitude = Double.parseDouble(parts[3]);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public String getIdentificator() {
@@ -45,13 +54,12 @@ public class DataModel {
     public void setTimeStampString(String timeStampString) {
         this.timeStampString = timeStampString;
     }
-    
-    
-    
-    public String toStringModel(){
-    return "id: " +  identificator +
-            ", lat: " + latitude + 
-            ", lon: " + longitude + 
-            ", timestamp: " + timeStampString;
+
+    @Override
+    public String toString() {
+        return identificator
+                + "," + timeStampString
+                + "," + latitude
+                + "," + longitude;
     }
 }
