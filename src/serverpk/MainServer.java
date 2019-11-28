@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author Patricia
  */
-public class MainServer implements Runnable, VehiculHandler.DataModelChange {
+public class MainServer implements Runnable{
 
     ServerSocket serverSocket;
     List<DataModel> list;
@@ -31,43 +31,11 @@ public class MainServer implements Runnable, VehiculHandler.DataModelChange {
     //  and store insinde a timer that will be used to check the response time. 
     private Map<Integer, ModelVehicul> Vehicles = new HashMap<>();
 
-    private Timer timer;
-    private TimerTask timerTask = new TimerTask() {
-        @Override
-        public void run() {
-            Map<Integer, ModelVehicul> vehiclesCopy = new HashMap<>();
-            vehiclesCopy.putAll(Vehicles);
-            System.out.println("----------------------------------------");
-            System.out.println("Vehicle copy");
-
-            vehiclesCopy.entrySet().stream().map((item) -> (ModelVehicul) item.getValue()).forEachOrdered((mv) -> {
-                System.out.println(mv.getData().toString());
-
-                long time = System.currentTimeMillis() - mv.getLastTime();
-                int seconds = (int) (time / 1000);
-                seconds = seconds % 60;
-                System.out.println("Seconds: " + seconds);
-
-                // I set 5 here for test, but should be 10
-                if (seconds > 5) {
-                    //TODO Check to see if it is alive 
-                    System.out.println("Check to see if it it alive for VehicleId: " + mv.getVehicleID());
-                }
-
-            });
-
-            System.out.println("----------------------------------------");
-        }
-    };
-
     @Override
     public void run() {
         try {
             serverSocket = new ServerSocket(PORT);
             System.out.println("Server is listening on port " + PORT);
-
-            timer = new Timer();
-            timer.scheduleAtFixedRate(timerTask, 0, 5000);
 
             while (true) {
                 Socket socket = null;
@@ -82,11 +50,10 @@ public class MainServer implements Runnable, VehiculHandler.DataModelChange {
 
                     //  Send to Vehicle its ID
                     writer.println(vehicleID);
-                    System.out.println("New vehicle with ID= +" + vehicleID + " connected");
+                    System.out.println("New vehicle with ID= " + vehicleID + " connected");
 
                     //  Create VehiculHandler where we will handle the receiving strings
-                    VehiculHandler handler = new VehiculHandler(socket, reader, writer);
-                    handler.setListener(this);
+                    VehiculHandler handler = new VehiculHandler(vehicleID, socket, reader, writer);
                     new Thread(handler).start();
 
                     //  Add vehicle to Vehicles Map
@@ -112,13 +79,4 @@ public class MainServer implements Runnable, VehiculHandler.DataModelChange {
             }
         }
     }
-
-    @Override
-    public void onDataModelChanged(DataModel data, long lastTime) {
-        // Update ModelVehicul with whole data
-        Vehicles.put(Integer.parseInt(data.getIdentificator()),
-                new ModelVehicul(Integer.parseInt(data.getIdentificator()), data, lastTime));
-
-    }
-
 }

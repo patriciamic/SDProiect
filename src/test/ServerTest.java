@@ -12,17 +12,10 @@ import serverpk.MainServer;
  *
  * @author alexandruborta
  */
-public class Main {
+public class ServerTest {
 
     public static void main(String[] args) throws InterruptedException {
         Thread server = new Thread(new MainServer());
         server.start();
-
-        Thread.sleep(1000);
-
-        for (int i = 0; i < 5; i++) {
-            new Thread(new Vehicul()).start();
-        }
-
     }
 }
