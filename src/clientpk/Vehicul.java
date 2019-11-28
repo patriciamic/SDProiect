@@ -55,7 +55,7 @@ public class Vehicul extends Thread {
                     String line;
                     while ((line = fileBuffer.readLine()) != null) {
                         writer.println(line);
-                        Thread.sleep(1000 * getRandomWithMax(10));
+                        Thread.sleep(1000 * getRandomWithMax(8));
                     }
                 } finally {
                     fileBuffer.close();
@@ -79,6 +79,7 @@ public class Vehicul extends Thread {
 
     public int getRandomWithMax(int max) {
         int random = (int) (max * Math.random());
+        System.out.println("Next message will be sent in "+random+" seconds");
         return random;
     }
     

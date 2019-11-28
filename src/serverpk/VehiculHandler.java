@@ -56,6 +56,7 @@ public class VehiculHandler implements Runnable {
                     //  Check if  its heartbeat response or no
                     if (!line.equals("live")) {
                         dataModel = new DataModel(line);
+                        System.out.println(line);
                     } else {
                         
                         //  if it is heartbeat response -> stop heartbeat timer, and restart the internal timer
@@ -138,17 +139,20 @@ public class VehiculHandler implements Runnable {
         writer.println("live");
         stopInternalTimer();
         resetInternalTimer();
+        resetHeartBeatTimer();
         StartHeartBeatTimer();
     }
 
     private void KillVehicle() {
         System.out.println("Vehicle with ID = " + vehicleID + " is dead, Removing it from pool");
         
+        resetHeartBeatTimer();
+        resetInternalTimer();
         if (heartBeatTimer != null) {
-            heartBeatTimer.cancel();
+            stopHeartBeatTimer();
         }
         if (internalTimer != null) {
-            internalTimer.cancel();
+            stopInternalTimer();
         }
         
         shutdown = true;
