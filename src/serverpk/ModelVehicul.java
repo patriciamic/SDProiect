@@ -5,7 +5,7 @@
  */
 package serverpk;
 
-import entities.DataModel;
+import entities.DataModelVehicle;
 
 /**
  *
@@ -14,14 +14,14 @@ import entities.DataModel;
 
 public class ModelVehicul {
     private int VehicleID = -1;
-    private DataModel data;
+    private DataModelVehicle data;
     private long lastTime;
     
     public ModelVehicul(int id){
         VehicleID = id;
     }
     
-     public ModelVehicul(int id, DataModel dataModel, long time){
+     public ModelVehicul(int id, DataModelVehicle dataModel, long time){
         VehicleID = id;
         data = dataModel;
         lastTime = time;
@@ -31,11 +31,11 @@ public class ModelVehicul {
         return VehicleID;
     }
 
-    public DataModel getData() {
+    public DataModelVehicle getData() {
         return data;
     }
 
-    public void setData(DataModel data) {
+    public void setData(DataModelVehicle data) {
         this.data = data;
     }
 

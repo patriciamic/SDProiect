@@ -4,7 +4,7 @@ package entities;
  *
  * @author Patricia
  */
-public class DataModel {
+public class DataModelVehicle {
 
     private String identificator;
     private double latitude;
@@ -13,7 +13,7 @@ public class DataModel {
 
     //  Data format : ID, DataStamp , Lat, Long
     //  Example of data : 1,2008-02-04 00:05:13,116.69161,39.85172
-    public DataModel(String line) {
+    public DataModelVehicle(String line) {
         try {
             String[] parts = line.split(",");
 

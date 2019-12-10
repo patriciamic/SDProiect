@@ -5,7 +5,7 @@
  */
 package serverpk;
 
-import entities.DataModel;
+import entities.DataModelVehicle;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,7 +26,7 @@ public class VehiculHandler implements Runnable {
     final private Socket socket;
     final private BufferedReader reader;
     final private PrintWriter writer;
-    DataModel dataModel;
+    DataModelVehicle dataModel;
     private Timer internalTimer;
     private Timer heartBeatTimer;
     private int vehicleID = 1;
@@ -39,7 +39,6 @@ public class VehiculHandler implements Runnable {
         this.reader = reader;
         this.writer = writer;
         this.vehicleID = id;
-
         //  Config and start the timer
         StartInternalTimer();
     }
@@ -50,15 +49,16 @@ public class VehiculHandler implements Runnable {
             //  Start listening to vehicle
             String line;
             try {
+
                 while ((line = reader.readLine()) != null) {
                     //  Each time receive coord from vehicle, reset timer to 0
                     resetInternalTimer();
                     //  Check if  its heartbeat response or no
                     if (!line.equals("live")) {
-                        dataModel = new DataModel(line);
+                        dataModel = new DataModelVehicle(line);
                         System.out.println(line);
                     } else {
-                        
+
                         //  if it is heartbeat response -> stop heartbeat timer, and restart the internal timer
                         System.out.println("Server received live message from Vehicle with ID = " + vehicleID);
                         resetHeartBeatTimer();
@@ -67,6 +67,7 @@ public class VehiculHandler implements Runnable {
                         StartInternalTimer();
                     }
                 }
+
             } catch (IOException ex) {
                 Logger.getLogger(VehiculHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -129,7 +130,7 @@ public class VehiculHandler implements Runnable {
         internalTimer.cancel();
     }
 
-    public DataModel getDataModel() {
+    public DataModelVehicle getDataModel() {
         return dataModel;
     }
 
@@ -145,7 +146,7 @@ public class VehiculHandler implements Runnable {
 
     private void KillVehicle() {
         System.out.println("Vehicle with ID = " + vehicleID + " is dead, Removing it from pool");
-        
+
         resetHeartBeatTimer();
         resetInternalTimer();
         if (heartBeatTimer != null) {
@@ -154,7 +155,7 @@ public class VehiculHandler implements Runnable {
         if (internalTimer != null) {
             stopInternalTimer();
         }
-        
+
         shutdown = true;
     }
 

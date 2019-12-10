@@ -1,6 +1,5 @@
 package clientpk;
 
-import entities.DataModel;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +9,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,6 +37,7 @@ public class Vehicul extends Thread {
             OutputStream output = socket.getOutputStream();
             PrintWriter writer = new PrintWriter(output, true);
 
+            writer.println("vehicle");
             //  Get my ID
             vehicleID = Integer.parseInt(reader.readLine());
             //  Open the file with data. The file name is "vehicleID.txt"

@@ -1,6 +1,7 @@
 package serverpk;
 
-import entities.DataModel;
+import entities.DataModelVehicle;
+import entities.DataModelClient;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,8 +13,6 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,10 +20,10 @@ import java.util.logging.Logger;
  *
  * @author Patricia
  */
-public class MainServer implements Runnable{
+public class MainServer implements Runnable {
 
     ServerSocket serverSocket;
-    List<DataModel> list;
+    List<DataModelVehicle> list;
     public static final int PORT = 5555;
     private int vehicleID = 1;
     //  Vehicles Map with all Vehicles for future use. Need a Vehicle Model, to be able to check if its busy or no
@@ -48,17 +47,23 @@ public class MainServer implements Runnable{
                     OutputStream output = socket.getOutputStream();
                     PrintWriter writer = new PrintWriter(output, true);
 
-                    //  Send to Vehicle its ID
-                    writer.println(vehicleID);
-                    System.out.println("New vehicle with ID= " + vehicleID + " connected");
+                    String message = reader.readLine();
 
-                    //  Create VehiculHandler where we will handle the receiving strings
-                    VehiculHandler handler = new VehiculHandler(vehicleID, socket, reader, writer);
-                    new Thread(handler).start();
+                    if (message.contains("client")) {
+                        new Thread(new ClientHandler(socket, reader, writer)).start();
+                    } else {
+                        //  Send to Vehicle its ID
+                        writer.println(vehicleID);
+                        System.out.println("New vehicle with ID= " + vehicleID + " connected");
 
-                    //  Add vehicle to Vehicles Map
-                    Vehicles.put(vehicleID, new ModelVehicul(vehicleID));
-                    vehicleID++;
+                        //  Create VehiculHandler where we will handle the receiving strings
+                        VehiculHandler handler = new VehiculHandler(vehicleID, socket, reader, writer);
+                        new Thread(handler).start();
+
+                        //  Add vehicle to Vehicles Map
+                        Vehicles.put(vehicleID, new ModelVehicul(vehicleID));
+                        vehicleID++;
+                    }
 
                 } catch (IOException ex) {
                     try {
