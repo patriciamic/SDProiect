@@ -28,7 +28,7 @@ public class MainServer implements Runnable {
     private int vehicleID = 1;
     //  Vehicles Map with all Vehicles for future use. Need a Vehicle Model, to be able to check if its busy or no
     //  and store insinde a timer that will be used to check the response time. 
-    private Map<Integer, ModelVehicul> Vehicles = new HashMap<>();
+    public static Map<Integer, ModelVehicul> Vehicles = new HashMap<>();
 
     @Override
     public void run() {
