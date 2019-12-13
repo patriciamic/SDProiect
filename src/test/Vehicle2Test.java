@@ -13,11 +13,13 @@ import serverpk.MainServer;
  * @author alexandruborta
  */
 public class Vehicle2Test {
-        public static void main(String[] args) throws InterruptedException {
 
-        Thread a = new Thread(new Vehicul());
-        a.start();
+    public static void main(String[] args) throws InterruptedException {
 
+        for (int i = 0; i < 10; i++) {
+            Thread a = new Thread(new Vehicul());
+            a.start();
+        }
 
     }
 }

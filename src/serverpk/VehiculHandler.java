@@ -29,7 +29,7 @@ public class VehiculHandler implements Runnable {
     DataModelVehicle dataModel;
     private Timer internalTimer;
     private Timer heartBeatTimer;
-    private int vehicleID = 1;
+    private int vehicleID = -11;
     private int seconds = 0;
     private int heartSeconds = 0;
     private boolean shutdown = false;
@@ -56,14 +56,24 @@ public class VehiculHandler implements Runnable {
                     //  Check if  its heartbeat response or no
                     if (!line.equals("live")) {
                         dataModel = new DataModelVehicle(line);
-                        System.out.println(line);
+
+                        //  O instanta de Vehicul poate porni mai multe masini.
+                        //  De pe server, odata ce o masina nu raspunde la heartbeat in
+                        //  timpul necesar, este declarata moarta si nu se mai afla in 
+                        //  mapul de masini, doar ca instanta de vehicul v-a continua sa 
+                        //  trimita mesaje catre server( nu avem cum sa oprim doar o masina
+                        //  din o instanta de vehicul , asa o sa printam mesajele doar la masinile
+                        //  care sunt inca "VII" (in map)
+                        if (MainServer.Vehicles.containsKey(Integer.parseInt(line.charAt(0) + ""))) {
+                            System.out.println(line);
+                        }
 
                         // testing if a dead vehicle will remove it's id from vehicles map
-                        System.out.println(MainServer.Vehicles.size() + " Vehicles now in HasMap");
+                        //System.out.println(MainServer.Vehicles.size() + " Vehicles now in HasMap");
                     } else {
 
                         //  if it is heartbeat response -> stop heartbeat timer, and restart the internal timer
-                        System.out.println("Server received live message from Vehicle with ID = " + vehicleID);
+                        System.out.println("Received heartbeat from Vehicle with ID = " + vehicleID);
                         resetHeartBeatTimer();
                         stopHeartBeatTimer();
                         resetInternalTimer();
@@ -75,11 +85,6 @@ public class VehiculHandler implements Runnable {
                 Logger.getLogger(VehiculHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        // if dead, remove vehicle from vehicle maps
-        MainServer.Vehicles.remove(vehicleID);
-
-        // testing if a dead vehicle will remove it's id from vehicles map
-        System.out.println("Removing id =" + vehicleID + " ||| " + MainServer.Vehicles.size() + " Vehicles now in HasMap");
     }
 
     //  Config and starts the timer.
@@ -165,6 +170,12 @@ public class VehiculHandler implements Runnable {
         }
 
         shutdown = true;
+
+        // if dead, remove vehicle from vehicle maps
+        MainServer.Vehicles.remove(vehicleID);
+
+        // testing if a dead vehicle will remove it's id from vehicles map
+        System.out.println("Removing id =" + vehicleID + " ||| " + MainServer.Vehicles.size() + " Vehicles now in HasMap");
     }
 
 }
