@@ -11,20 +11,31 @@ import entities.DataModelVehicle;
  *
  * @author alexandruborta
  */
-
 public class ModelVehicul {
+
     private int VehicleID = -1;
     private DataModelVehicle data;
     private long lastTime;
-    
-    public ModelVehicul(int id){
+    private boolean busy;
+
+    public ModelVehicul(int id) {
         VehicleID = id;
+        busy = false;
     }
-    
-     public ModelVehicul(int id, DataModelVehicle dataModel, long time){
+
+    public ModelVehicul(int id, DataModelVehicle dataModel, long time) {
         VehicleID = id;
         data = dataModel;
         lastTime = time;
+        busy = false;
+    }
+
+    public void setBusy(boolean busy) {
+        this.busy = busy;
+    }
+    
+    public boolean isBusy(){
+        return this.busy;
     }
 
     public int getVehicleID() {
@@ -42,8 +53,5 @@ public class ModelVehicul {
     public long getLastTime() {
         return lastTime;
     }
-    
-    
-    
-    
+
 }

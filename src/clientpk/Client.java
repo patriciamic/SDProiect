@@ -44,49 +44,50 @@ public class Client implements Runnable {
             PrintWriter writer = new PrintWriter(output, true);
             writer.println("client");
             String serverMessage = reader.readLine();
-            System.out.println(serverMessage);
 
-            //start meniu
-            System.out.println("Do you want to select a vehicle?");
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            String responseConsole = br.readLine();
-//            System.out.println(responseConsole);
+            boolean exit = false;
+            while (!exit) {
 
-            if (getResponse(responseConsole).equals("y")) {
+                //start meniu
+                System.out.println("Do you want to select a vehicle?");
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                String responseConsole = br.readLine();
 
-                //send model to server
-                DataModelClient clientData = new DataModelClient(id + ",116.69161,39.85172");
-                writer.println("request array:" + clientData.getFormatMessage());
-                serverMessage = reader.readLine();
-                System.out.println(serverMessage);// received array with vehicles
-
-                System.out.println("Select a vehicle id: ");
-                responseConsole = br.readLine();
-
-                String res = getResponse(responseConsole);
-                if (!res.equals("default") && !res.equals("y") && !res.equals("n")) { //number arrived
-                    System.out.println("Your select: " + responseConsole);
-                    writer.println("vehicle selected:" + responseConsole);
+                if (getResponse(responseConsole).equals("y")) {
+                    DataModelClient clientData = new DataModelClient(id + ",100.69161,20.85172");
+                    writer.println("request array:" + clientData.getFormatMessage());
 
                     serverMessage = reader.readLine();
-                    System.out.println(serverMessage);
+                    showArrayInConsole(serverMessage);
 
-                } else {
-                    System.out.println("Wrond entry");
+                    if (!serverMessage.equals("nothing found")) {
+
+                        System.out.println("Select a vehicle id: ");
+                        responseConsole = br.readLine();
+
+                        String res = getResponse(responseConsole);
+                        if (!res.equals("default") && !res.equals("y") && !res.equals("n")) { //number arrived
+                            System.out.println("Your select: " + responseConsole);
+                            writer.println("vehicle selected:" + responseConsole);
+                            serverMessage = reader.readLine();
+                            System.out.println(serverMessage);
+                        } else {
+                            System.out.println("Wrond entry");
+                        }
+
+                    }
                 }
 
-            }
-            System.out.println("Continue?");
-            responseConsole = br.readLine();
-            if (getResponse(responseConsole).equals("n")) {
-                System.out.println("Do you want to exit?");
+                if (getResponse(responseConsole).equals("default")) {
+                    System.out.println("Wrong entry");
+                }
+
+                System.out.println("Continue?");
                 responseConsole = br.readLine();
-                if (getResponse(responseConsole).equals("y")) {
+                if (getResponse(responseConsole).equals("n")) {
                     System.out.println("I'm out");
+                    exit = true;
                 }
-            }
-
-            if (getResponse(responseConsole).equals("default")) {
 
             }
 
@@ -94,6 +95,14 @@ public class Client implements Runnable {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    private void showArrayInConsole(String serverMessage) {
+        String[] parts = serverMessage.split("separator");
+
+        for (String part : parts) {
+            System.out.println(part);
+        }
     }
 
     private String getResponse(String responseConsole) {

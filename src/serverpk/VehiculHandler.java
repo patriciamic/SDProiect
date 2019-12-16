@@ -66,6 +66,8 @@ public class VehiculHandler implements Runnable {
                         //  care sunt inca "VII" (in map)
                         if (MainServer.Vehicles.containsKey(Integer.parseInt(line.charAt(0) + ""))) {
                             System.out.println(line);
+                            MainServer.Vehicles.put(vehicleID,
+                                    new ModelVehicul(vehicleID, dataModel, System.currentTimeMillis()));
                         }
 
                         // testing if a dead vehicle will remove it's id from vehicles map

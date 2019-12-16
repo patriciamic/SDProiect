@@ -50,5 +50,14 @@ public class DataModelClient {
     public String getFormatMessage() {
         return formatMessage;
     }
+    
+    @Override
+    public String toString(){
+    
+        return identificator+","+
+                latitude+","+
+                longitude;
+        
+    }
 
 }

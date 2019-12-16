@@ -5,12 +5,14 @@
  */
 package serverpk;
 
-import entities.DataModelVehicle;
 import entities.DataModelClient;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,7 +25,7 @@ public class ClientHandler implements Runnable {
     final private Socket socket;
     final private BufferedReader reader;
     final private PrintWriter writer;
-    DataModelClient dmc;
+    DataModelClient dataModelClient;
 
     public ClientHandler(Socket socket, BufferedReader reader, PrintWriter writer) {
         this.socket = socket;
@@ -36,17 +38,51 @@ public class ClientHandler implements Runnable {
         System.out.println("ClientHandler start");
         String line;
         try {
-            writer.println("hello new client");
+            writer.println("hello client");
             while ((line = reader.readLine()) != null) {
-                //deal with client message
-                System.out.println("Message from client " + line);
+                System.out.println("CLIENT HANDLER: Message from client " + line);
                 if (line.contains("array")) {
-                    // array with vehicles
-                    writer.println("1, 2, 3, 4");
+                    dataModelClient = new DataModelClient(line.split(":")[1]);
+                    System.out.println("CLIENT HANDLER: Client model: " + dataModelClient.toString());
+
+                    List<String> list = getClosestVehiclesList(dataModelClient.getLatitude(), dataModelClient.getLongitude());
+                    if (!list.isEmpty()) {
+                        String responseBuilder = "";
+                        for (String string : list) {
+                            responseBuilder = responseBuilder + string;
+                        }
+                        System.out.println("RES: " + responseBuilder);
+                        writer.println(responseBuilder);
+                    } else {
+                        writer.println("nothing found");
+                    }
+
                 }
-                
-                if(line.contains("vehicle selected")){
-                    writer.println("the vehicle with id: " + line.split(":")[1] + " has been reserved.");
+
+                if (line.contains("vehicle selected")) {
+                    try {
+                        if (MainServer.Vehicles.containsKey(Integer.parseInt(line.split(":")[1]))) {
+                            int key = Integer.parseInt(line.split(":")[1]);
+                            ModelVehicul model = MainServer.Vehicles.get(key);
+                            if (model.getData() != null) {
+
+                                if (model.isBusy()) {
+                                    writer.println("sorry, this vehicle is busy now.");
+                                } else {
+                                    model.setBusy(true);
+                                    MainServer.Vehicles.put(key, model);
+                                    writer.println("the vehicle with id: " + key + " has been reserved.");
+                                }
+                            } else {
+                                writer.println("this vehicle doesn't exist.");
+                            }
+                        } else {
+                            writer.println("this vehicle doesn't exist.");
+                        }
+
+                    } catch (Exception e) {
+                        writer.println("something went wrong.");
+                    }
                 }
 
                 Thread.sleep(1000);
@@ -57,4 +93,36 @@ public class ClientHandler implements Runnable {
         }
 
     }
+
+    List<String> getClosestVehiclesList(double lat, double lon) {
+
+        Map<Integer, ModelVehicul> vehiclesCopy = new HashMap<>();
+        vehiclesCopy.putAll(MainServer.Vehicles);
+        List<String> listOfVehicles = new ArrayList<String>();
+
+        System.out.println("CLIENT HANDLER: coord from client: " + lat + " , " + lon);
+        try {
+            vehiclesCopy.entrySet().stream().map((item) -> (ModelVehicul) item.getValue()).forEachOrdered((mv) -> {
+
+                if (!mv.isBusy()) {
+                    int distance = getDistance(lat, lon, mv.getData().getLatitude(), mv.getData().getLongitude());
+                    if (distance <= 50) {
+                        listOfVehicles.add("Vehicle id: " + mv.getVehicleID() + " distance from you is " + distance + " separator");
+                    }
+                }
+
+            });
+
+        } catch (Exception e) {
+            System.out.println("CLIENT HANDLER: ERR: " + e.getMessage());
+        }
+
+        return listOfVehicles;
+    }
+
+    private int getDistance(double lat, double lon, double latitude, double longitude) {
+        double sum = Math.pow((latitude - lat), 2) + Math.pow((longitude - lon), 2);
+        return (int) Math.sqrt(sum);
+    }
+
 }
