@@ -1,0 +1,127 @@
+New vehicle with ID= 1 connected
+New vehicle with ID= 2 connected
+New vehicle with ID= 3 connected
+New vehicle with ID= 4 connected
+New vehicle with ID= 5 connected
+New vehicle with ID= 6 connected
+5,2008-02-04 00:00:47,116.56752,39.84876
+1,2008-02-04 00:05:13,116.69161,39.85172
+3,2008-02-04 00:03:56,116.65518,39.95388
+4,2008-02-04 00:02:19,116.55437,39.86734
+2,2008-02-04 07:49:31,116.45865,39.88105
+New vehicle with ID= 7 connected
+6,2008-02-04 00:02:25,116.52105,39.90795
+New vehicle with ID= 8 connected
+New vehicle with ID= 9 connected
+4,2008-02-04 00:12:19,116.65744,39.86938
+6,2008-02-04 00:08:30,116.61298,39.90477
+New vehicle with ID= 10 connected
+9,2008-02-04 00:00:24,116.35772,39.93533
+10,2008-02-04 07:02:04,116.39852,39.91158
+1,2008-02-04 00:15:12,116.69163,39.85174
+5,2008-02-04 00:10:47,116.56752,39.84875
+3,2008-02-04 00:08:56,116.69494,39.98554
+4,2008-02-04 00:22:19,116.66017,39.87903
+Sent HeartBeat for vehicle with ID = 2
+Received heartbeat from Vehicle with ID = 2
+Sent HeartBeat for vehicle with ID = 6
+Received heartbeat from Vehicle with ID = 6
+Sent HeartBeat for vehicle with ID = 7
+Sent HeartBeat for vehicle with ID = 8
+Sent HeartBeat for vehicle with ID = 9
+4,2008-02-04 00:32:19,116.66016,39.87903
+Sent HeartBeat for vehicle with ID = 10
+Received heartbeat from Vehicle with ID = 9
+Received heartbeat from Vehicle with ID = 10
+5,2008-02-04 00:20:47,116.56752,39.84874
+9,2008-02-04 00:06:24,116.3624,39.93863
+2,2008-02-04 07:52:46,116.45245,39.87486
+6,2008-02-04 00:14:30,116.62953,39.88748
+10,2008-02-04 07:02:10,116.39858,39.912
+Sent HeartBeat for vehicle with ID = 1
+Received heartbeat from Vehicle with ID = 1
+Vehicle with ID = 6 is dead, Removing it from pool
+3,2008-02-04 00:18:57,116.75385,40.02126
+1,2008-02-04 00:25:12,116.69164,39.85173
+Removing id =6 ||| 9 Vehicles now in HasMap
+3,2008-02-04 00:23:57,116.75385,40.02127
+Vehicle with ID = 7 is dead, Removing it from pool
+Removing id =7 ||| 8 Vehicles now in HasMap
+9,2008-02-04 00:12:24,116.38782,39.94222
+Vehicle with ID = 8 is dead, Removing it from pool
+Removing id =8 ||| 7 Vehicles now in HasMap
+Vehicle with ID = 9 is dead, Removing it from pool
+Removing id =9 ||| 6 Vehicles now in HasMap
+2,2008-02-04 07:54:33,116.45003,39.88288
+2,2008-02-04 07:57:47,116.44463,39.87931
+1,2008-02-04 00:35:12,116.69167,39.8517
+Sent HeartBeat for vehicle with ID = 4
+Received heartbeat from Vehicle with ID = 4
+Sent HeartBeat for vehicle with ID = 5
+Received heartbeat from Vehicle with ID = 5
+Sent HeartBeat for vehicle with ID = 10
+Received heartbeat from Vehicle with ID = 10
+5,2008-02-04 00:30:46,116.56751,39.84873
+4,2008-02-04 00:42:18,116.66013,39.87905
+Sent HeartBeat for vehicle with ID = 3
+2,2008-02-04 07:59:34,116.44972,39.87491
+Received heartbeat from Vehicle with ID = 3
+10,2008-02-04 07:02:13,116.39862,39.91218
+3,2008-02-04 00:28:57,116.75386,40.02127
+1,2008-02-04 00:45:12,116.69174,39.85169
+3,2008-02-04 00:33:57,116.75386,40.02127
+4,2008-02-04 00:52:19,116.66012,39.87906
+10,2008-02-04 07:02:25,116.39878,39.91303
+2,2008-02-04 08:02:49,116.45437,39.88314
+1,2008-02-04 00:55:13,116.69162,39.85159
+Sent HeartBeat for vehicle with ID = 5
+Received heartbeat from Vehicle with ID = 5
+5,2008-02-04 00:40:46,116.56751,39.84873
+Sent HeartBeat for vehicle with ID = 4
+Received heartbeat from Vehicle with ID = 4
+Sent HeartBeat for vehicle with ID = 3
+Received heartbeat from Vehicle with ID = 3
+10,2008-02-04 07:02:28,116.39882,39.91323
+1,2008-02-04 01:05:13,116.69162,39.8516
+4,2008-02-04 01:02:19,116.66011,39.87906
+1,2008-02-04 01:15:12,116.69162,39.85158
+2,2008-02-04 08:02:49,116.45437,39.88314
+3,2008-02-04 00:38:56,116.75385,40.02127
+3,2008-02-04 00:48:56,116.75385,40.02127
+Sent HeartBeat for vehicle with ID = 5
+Received heartbeat from Vehicle with ID = 5
+3,2008-02-04 00:53:56,116.75385,40.02127
+3,2008-02-04 00:58:56,116.75385,40.02127
+2,2008-02-04 08:04:36,116.45483,39.88315
+Sent HeartBeat for vehicle with ID = 10
+3,2008-02-04 01:03:56,116.75385,40.02127
+Received heartbeat from Vehicle with ID = 10
+Sent HeartBeat for vehicle with ID = 1
+Received heartbeat from Vehicle with ID = 1
+Sent HeartBeat for vehicle with ID = 4
+5,2008-02-04 00:50:46,116.56751,39.84874
+5,2008-02-04 01:00:46,116.56751,39.84874
+Received heartbeat from Vehicle with ID = 4
+5,2008-02-04 01:10:46,116.56751,39.84874
+10,2008-02-04 07:02:33,116.3989,39.91362
+4,2008-02-04 01:02:19,116.66011,39.87906
+1,2008-02-04 01:25:12,116.69162,39.85158
+2,2008-02-04 08:07:50,116.4558,39.90326
+Sent HeartBeat for vehicle with ID = 5
+Sent HeartBeat for vehicle with ID = 3
+Sent HeartBeat for vehicle with ID = 10
+Sent HeartBeat for vehicle with ID = 4
+Sent HeartBeat for vehicle with ID = 1
+Vehicle with ID = 5 is dead, Removing it from pool
+Removing id =5 ||| 5 Vehicles now in HasMap
+Vehicle with ID = 3 is dead, Removing it from pool
+Removing id =3 ||| 4 Vehicles now in HasMap
+Sent HeartBeat for vehicle with ID = 2
+Vehicle with ID = 10 is dead, Removing it from pool
+Removing id =10 ||| 3 Vehicles now in HasMap
+Vehicle with ID = 4 is dead, Removing it from pool
+Removing id =4 ||| 2 Vehicles now in HasMap
+Vehicle with ID = 1 is dead, Removing it from pool
+Removing id =1 ||| 1 Vehicles now in HasMap
+Vehicle with ID = 2 is dead, Removing it from pool
+Removing id =2 ||| 0 Vehicles now in HasMap
