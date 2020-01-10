@@ -13,6 +13,8 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -101,7 +103,10 @@ public class MainServer implements Runnable {
     }
     
     static void WriteLog(String s){
-        printWriter.println(s);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
+        
+        printWriter.println(sdf.format(timestamp) + " : "+s);
         printWriter.flush();
     }
 }
