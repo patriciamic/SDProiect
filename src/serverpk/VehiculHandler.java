@@ -83,8 +83,8 @@ public class VehiculHandler implements Runnable {
                     }
                 }
 
-            } catch (IOException ex) {
-                Logger.getLogger(VehiculHandler.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+               // Logger.getLogger(VehiculHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
