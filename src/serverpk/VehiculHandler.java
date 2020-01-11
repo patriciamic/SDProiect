@@ -16,6 +16,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static serverpk.MainServer.WriteLog;
+
 
 /**
  *
@@ -65,6 +67,7 @@ public class VehiculHandler implements Runnable {
                         //  din o instanta de vehicul , asa o sa printam mesajele doar la masinile
                         //  care sunt inca "VII" (in map)
                         if (MainServer.Vehicles.containsKey(Integer.parseInt(line.charAt(0) + ""))) {
+                            WriteLog(line);
                             System.out.println(line);
                             MainServer.Vehicles.put(vehicleID,
                                     new ModelVehicul(vehicleID, dataModel, System.currentTimeMillis()));
@@ -75,6 +78,9 @@ public class VehiculHandler implements Runnable {
                     } else {
 
                         //  if it is heartbeat response -> stop heartbeat timer, and restart the internal timer
+                        //LOG
+                        WriteLog("Received heartbeat from Vehicle with ID = " + vehicleID);
+
                         System.out.println("Received heartbeat from Vehicle with ID = " + vehicleID);
                         resetHeartBeatTimer();
                         stopHeartBeatTimer();
@@ -151,6 +157,8 @@ public class VehiculHandler implements Runnable {
 
     private void SendHeartBeat() {
         // Call HeartBeat
+        //LOG
+        WriteLog("Sent HeartBeat for vehicle with ID = " + vehicleID);
         System.out.println("Sent HeartBeat for vehicle with ID = " + vehicleID);
         writer.println("live");
         stopInternalTimer();
@@ -161,6 +169,8 @@ public class VehiculHandler implements Runnable {
 
     private void KillVehicle() {
         System.out.println("Vehicle with ID = " + vehicleID + " is dead, Removing it from pool");
+        //LOG
+        WriteLog("Vehicle with ID = " + vehicleID + " is dead, Removing it from pool");
 
         resetHeartBeatTimer();
         resetInternalTimer();
@@ -177,6 +187,8 @@ public class VehiculHandler implements Runnable {
         MainServer.Vehicles.remove(vehicleID);
 
         // testing if a dead vehicle will remove it's id from vehicles map
+        //LOG
+        WriteLog("Removing id =" + vehicleID + " ||| " + MainServer.Vehicles.size() + " Vehicles now in HasMap");
         System.out.println("Removing id =" + vehicleID + " ||| " + MainServer.Vehicles.size() + " Vehicles now in HasMap");
     }
 
