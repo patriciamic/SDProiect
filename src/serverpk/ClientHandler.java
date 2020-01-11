@@ -36,13 +36,17 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         System.out.println("ClientHandler start");
+        MainServer.WriteLog("ClientHandler start");
         String line;
         try {
+            MainServer.WriteLog("CLIENT HANDLER hello client");
             writer.println("hello client");
             while ((line = reader.readLine()) != null) {
                 System.out.println("CLIENT HANDLER: Message from client " + line);
+                MainServer.WriteLog("CLIENT HANDLER: Message from client " + line);
                 if (line.contains("array")) {
                     dataModelClient = new DataModelClient(line.split(":")[1]);
+                    MainServer.WriteLog("CLIENT HANDLER: Client model: " + dataModelClient.toString());
                     System.out.println("CLIENT HANDLER: Client model: " + dataModelClient.toString());
 
                     List<String> list = getClosestVehiclesList(dataModelClient.getLatitude(), dataModelClient.getLongitude());
@@ -51,9 +55,11 @@ public class ClientHandler implements Runnable {
                         for (String string : list) {
                             responseBuilder = responseBuilder + string;
                         }
+                        MainServer.WriteLog("CLIENT HANDLER RES: " + responseBuilder);
                         System.out.println("RES: " + responseBuilder);
                         writer.println(responseBuilder);
                     } else {
+                        MainServer.WriteLog("CLIENT HANDLER nothing found");
                         writer.println("nothing found");
                     }
 
@@ -67,20 +73,25 @@ public class ClientHandler implements Runnable {
                             if (model.getData() != null) {
 
                                 if (model.isBusy()) {
+                                    MainServer.WriteLog("CLIENT HANDLER: sorry, this vehicle is busy now.");
                                     writer.println("sorry, this vehicle is busy now.");
                                 } else {
                                     model.setBusy(true);
                                     MainServer.Vehicles.put(key, model);
+                                    MainServer.WriteLog("CLIENT HANDLER: the vehicle with id: " + key + " has been reserved.");
                                     writer.println("the vehicle with id: " + key + " has been reserved.");
                                 }
                             } else {
+                                MainServer.WriteLog("CLIENT HANDLER: this vehicle doesn't exist.");
                                 writer.println("this vehicle doesn't exist.");
                             }
                         } else {
+                            MainServer.WriteLog("CLIENT HANDLER: this vehicle doesn't exist.");
                             writer.println("this vehicle doesn't exist.");
                         }
 
                     } catch (Exception e) {
+                        MainServer.WriteLog("CLIENT HANDLER: something went wrong");
                         writer.println("something went wrong.");
                     }
                 }
@@ -100,6 +111,7 @@ public class ClientHandler implements Runnable {
         vehiclesCopy.putAll(MainServer.Vehicles);
         List<String> listOfVehicles = new ArrayList<String>();
 
+        MainServer.WriteLog("CLIENT HANDLER: coord from client: " + lat + " , " + lon);
         System.out.println("CLIENT HANDLER: coord from client: " + lat + " , " + lon);
         try {
             vehiclesCopy.entrySet().stream().map((item) -> (ModelVehicul) item.getValue()).forEachOrdered((mv) -> {
