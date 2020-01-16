@@ -16,7 +16,7 @@ public class Vehicle2Test {
 
     public static void main(String[] args) throws InterruptedException {
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             Thread a = new Thread(new Vehicul());
             a.start();
         }

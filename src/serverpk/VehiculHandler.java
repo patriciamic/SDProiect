@@ -18,7 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static serverpk.MainServer.WriteLog;
 
-
 /**
  *
  * @author alexandruborta
@@ -90,7 +89,7 @@ public class VehiculHandler implements Runnable {
                 }
 
             } catch (Exception ex) {
-               // Logger.getLogger(VehiculHandler.class.getName()).log(Level.SEVERE, null, ex);
+                // Logger.getLogger(VehiculHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -117,20 +116,25 @@ public class VehiculHandler implements Runnable {
 
     //  HeartbeatTimer. Time wait for response is 3 seconds
     private void StartHeartBeatTimer() {
-        heartBeatTimer = new Timer();
-        heartBeatTimer.scheduleAtFixedRate(new TimerTask() {
+        try {
+            heartBeatTimer = new Timer();
+            heartBeatTimer.scheduleAtFixedRate(new TimerTask() {
 
-            @Override
-            public void run() {
-                heartSeconds++;
+                @Override
+                public void run() {
+                    heartSeconds++;
 
-                if (heartSeconds >= 3) {
-                    KillVehicle();
-                    // Stop the timer
-                    heartBeatTimer.cancel();
+                    if (heartSeconds >= 3) {
+                        KillVehicle();
+                        // Stop the timer
+                        heartBeatTimer.cancel();
+                    }
                 }
-            }
-        }, 1000, 1000);
+            }, 1000, 1000);
+        } catch (Exception e) {
+
+        }
+
     }
 
     private void resetInternalTimer() {
@@ -156,8 +160,6 @@ public class VehiculHandler implements Runnable {
     }
 
     private void SendHeartBeat() {
-        // Call HeartBeat
-        //LOG
         WriteLog("Sent HeartBeat for vehicle with ID = " + vehicleID);
         System.out.println("Sent HeartBeat for vehicle with ID = " + vehicleID);
         writer.println("live");

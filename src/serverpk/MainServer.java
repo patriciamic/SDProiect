@@ -56,26 +56,18 @@ public class MainServer implements Runnable {
 
                     InputStream input = socket.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-
                     OutputStream output = socket.getOutputStream();
                     PrintWriter writer = new PrintWriter(output, true);
-
                     String message = reader.readLine();
-
                     if (message.contains("client")) {
                         new Thread(new ClientHandler(socket, reader, writer)).start();
                     } else {
-                        //  Send to Vehicle its ID
                         writer.println(vehicleID);
-
                         System.out.println("New vehicle with ID= " + vehicleID + " connected");
-                        //LOG
                         WriteLog("New vehicle with ID= " + vehicleID + " connected");
-
-                        //  Create VehiculHandler where we will handle the receiving strings
                         VehiculHandler handler = new VehiculHandler(vehicleID, socket, reader, writer);
                         new Thread(handler).start();
-
+                        
                         //  Add vehicle to Vehicles Map
                         Vehicles.put(vehicleID, new ModelVehicul(vehicleID));
                         vehicleID++;
@@ -85,18 +77,18 @@ public class MainServer implements Runnable {
                     try {
                         socket.close();
                     } catch (IOException ex1) {
-                        Logger.getLogger(MainServer.class.getName()).log(Level.SEVERE, null, ex1);
+                      //  Logger.getLogger(MainServer.class.getName()).log(Level.SEVERE, null, ex1);
                     }
-                    Logger.getLogger(MainServer.class.getName()).log(Level.SEVERE, null, ex);
+                  //  Logger.getLogger(MainServer.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(MainServer.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(MainServer.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 serverSocket.close();
             } catch (IOException ex) {
-                Logger.getLogger(MainServer.class.getName()).log(Level.SEVERE, null, ex);
+              //  Logger.getLogger(MainServer.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         }

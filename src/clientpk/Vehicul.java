@@ -29,6 +29,7 @@ public class Vehicul extends Thread {
     @Override
     public void run() {
         try {
+            Thread.sleep(1500);
             Socket socket = new Socket(hostname, MainServer.PORT);
 
             InputStream input = socket.getInputStream();
@@ -64,10 +65,15 @@ public class Vehicul extends Thread {
             socket.close();
 
         } catch (Exception ex) {
-            System.out.println(ex);
+            // System.out.println(ex);
         } finally {
-            //  Stop the thread listening from server when the vehicle is down
-            ((ServerResponse) serverThread).Stop();
+            try {
+                //  Stop the thread listening from server when the vehicle is down
+                ((ServerResponse) serverThread).Stop();
+            } catch (Exception e) {
+
+            }
+
         }
     }
 
@@ -78,11 +84,11 @@ public class Vehicul extends Thread {
 
     public int getRandomWithMax(int max) {
         int random = (int) (max * Math.random());
-        System.out.println("Next message will be sent in "+random+" seconds");
+        System.out.println("Next message will be sent in " + random + " seconds");
         return random;
     }
-    
-    public void Stop(){
+
+    public void Stop() {
         alive = false;
     }
 
@@ -104,7 +110,6 @@ public class Vehicul extends Thread {
                 while (alive) {
                     //  check if its heartbeat
                     String message = reader.readLine();
-
                     if (message != null && message.equals("live")) {
                         System.out.println("Vehicle with ID = " + vehicleID + " received HeartBeat. Send live message");
                         writer.println("live");
@@ -112,11 +117,11 @@ public class Vehicul extends Thread {
                 }
 
             } catch (IOException ex) {
-                Logger.getLogger(Vehicul.class.getName()).log(Level.SEVERE, null, ex);
+                // Logger.getLogger(Vehicul.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-       
-        public void Stop(){
+
+        public void Stop() {
             this.alive = false;
         }
     }

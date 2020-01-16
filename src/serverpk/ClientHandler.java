@@ -100,7 +100,7 @@ public class ClientHandler implements Runnable {
             }
 
         } catch (Exception ex) {
-            Logger.getLogger(VehiculHandler.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(VehiculHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

@@ -36,10 +36,8 @@ public class Client implements Runnable {
             System.out.println("Client1 start");
 
             Socket socket = new Socket(hostname, MainServer.PORT);
-
             InputStream input = socket.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-
             OutputStream output = socket.getOutputStream();
             PrintWriter writer = new PrintWriter(output, true);
             writer.println("client");
@@ -92,7 +90,7 @@ public class Client implements Runnable {
             }
 
         } catch (Exception ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
